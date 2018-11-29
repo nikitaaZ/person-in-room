@@ -1,21 +1,6 @@
-let FIELD = [];
 const HTML = document.getElementsByClassName("app")[0];
 const GRID_LENGTH = 7;
-let PLAYER_POSITION = [1,1]
-
-let Init_Grid = (grid_length = 7, player_pos = [0,0]) => {
-    for(let i = 0; i < grid__length; i++){
-        FIELD[i] = [];
-        for(let j = 0; j < grid_length; j++){
-            if(i === player_pos[0] && j === player_pos[1]){
-                FIELD[i][j] = 1;
-            }
-            else{
-                FIELD[i][j] = 0;
-            }
-        }
-    }
-}
+let PLAYER_POSITION = [0,0]
 
 let Draw_Grid = (grid_length = 7) => {
     for(let i = 0; i < grid_length; i++){
@@ -36,32 +21,38 @@ let Draw_Player = (player_pos = [0,0]) => {
     
 }
 
-let Goleft = () =>{
+let GoLeft = () => {
     if(PLAYER_POSITION[1] > 0){
         --PLAYER_POSITION[1];
     }
     
 }
 
-let Goup = () =>{
+let GoUp = () =>{
     if(PLAYER_POSITION[0] > 0){
         --PLAYER_POSITION[0];
     }
     
 }
 
-let Godown = () =>{
+let GoDown = () =>{
     if(PLAYER_POSITION[0] < GRID_LENGTH -1){
         ++PLAYER_POSITION[0];
     }
     
 }
 
-let Goright = () =>{
+let GoRight = () =>{
     if(PLAYER_POSITION[1] < GRID_LENGTH - 1){
         ++PLAYER_POSITION[1];
     }
     
+}
+
+let Rotate_Player = (side = 0) =>{
+    let player_img = document.getElementsByClassName("player")[0];
+    let deg = side*90;
+    player_img.style.transform = "rotate("+deg+"deg)";
 }
 
 Draw_Grid(GRID_LENGTH);
@@ -70,18 +61,19 @@ Draw_Player(PLAYER_POSITION);
 addEventListener("keydown", function(e){
     switch(e.keyCode){
         case 37: //left
-            Goleft();
+            GoLeft();
             break;
         case 38: //up
-            Goup();
+            GoUp();
             break;
         case 39: //right
-            Goright();
+            GoRight();
             break;
         case 40: //down
-            Godown();
+            GoDown();
             break;
     }
     Draw_Player(PLAYER_POSITION);
+    Rotate_Player(e.keyCode - 36);
 });
 
